@@ -19,14 +19,30 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 To use the module,
 
 ``` javascript
-var lib = require( 'compute-erfc' );
+var erfc = require( 'compute-erfc' );
+```
+
+The method accepts a single argument: either a single `numeric` value or an `array` of numeric values, which may include `NaN`, `+infinity`, and `-infinity`. For an input `array`, the complementary error function is evaluated for each value.
+
+``` javascript
+erfc( -1 );
+erfc( [ -10, -1, 0, 1, 10 ] );
 ```
 
 
 ## Examples
 
 ``` javascript
-var lib = require( 'compute-erfc' );
+// Simulate some data...
+var data = new Array( 100 );
+
+for ( var i = 0; i < data.length; i++ ) {
+	data[ i ] = Math.random()*20 - 10;
+}
+
+// Evaluate the complementary error function for each datum:
+console.log( erfc( data ) );
+// returns [...]
 ```
 
 To run the example code from the top-level application directory,

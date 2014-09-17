@@ -25,7 +25,13 @@
   "keywords": [
     "compute.io",
     "compute",
-    "computation"
+    "computation",
+    "statistics",
+    "stats",
+    "error function",
+    "erf",
+    "complementary",
+    "erfc"
   ],
   "bugs": {
     "url": "https://github.com/compute-io/erfc/issues"
