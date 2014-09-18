@@ -72,16 +72,16 @@ describe( 'compute-erfc', function tests() {
 		assert.ok( val !== val );
 	});
 
-	it( 'should return 1 if provided positive infinity', function test() {
+	it( 'should return 0 if provided positive infinity', function test() {
 		var inf = Number.POSITIVE_INFINITY,
 			val = erfc( inf );
-		assert.strictEqual( val, 1 );
+		assert.strictEqual( val, 0 );
 	});
 
-	it( 'should return -1 if provided negative infinity', function test() {
+	it( 'should return 2 if provided negative infinity', function test() {
 		var ninf = Number.NEGATIVE_INFINITY,
 			val = erfc( ninf );
-		assert.strictEqual( val, -1 );
+		assert.strictEqual( val, 2 );
 	});
 
 	it( 'should return a numeric value if provided a numeric value', function test() {
@@ -122,6 +122,8 @@ describe( 'compute-erfc', function tests() {
 			-1e-306,
 			1e-299,
 			-1e-299,
+			0.1,
+			-0.1,
 			0.8,
 			-0.8,
 			1,
@@ -131,31 +133,37 @@ describe( 'compute-erfc', function tests() {
 			2,
 			-2,
 			3,
-			-3
+			-3,
+			100,
+			-100
 		];
 
 		// Evaluated on Wolfram Alpha:
 		expected = [
-			1.128379e-300,
-			-1.128379e-300,
-			1.128379e-299,
-			-1.128379e-299,
-			0.742101,
-			-0.742101,
-			0.84270079,
-			-0.84270079,
-			0.999999999,
-			-0.999999999,
-			0.995322265,
-			-0.995322265,
-			0.9999779095,
-			-0.9999779095
+			1.00000000,
+			1.00000000,
+			1.00000000,
+			1.00000000,
+			0.887537,
+			1.11246,
+			0.257899,
+			1.74210,
+			0.15729920,
+			1.84270079,
+			2.08848758e-45,
+			2.00000000,
+			0.00467773,
+			1.99532226,
+			0.00002209,
+			1.99997791,
+			0.00000000,
+			2.00000000
 		];
 
 		actual = erfc( values );
 
 		for ( var i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-7 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-5 );
 		}
 	});
 
