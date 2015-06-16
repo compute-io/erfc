@@ -37,34 +37,61 @@ var erfc = require( 'compute-erfc' );
 
 #### erfc( x[, options] )
 
-Evaluates the [complementary error function](http://en.wikipedia.org/wiki/Error_function). The function accepts as its first argument either a single `numeric` value or an `array` of numeric values, which may include `NaN`, `+infinity`, and `-infinity`. For an input `array`, the `erfc` function is evaluated for each value.
+Evaluates the [complementary error function](http://en.wikipedia.org/wiki/Error_function). `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
+
+Values may include `NaN`, `+infinity`, and `-infinity`. For an input `array` and `matrix`, the `erfc` function is evaluated for each value.
+
 
 ``` javascript
-erfc( -1 );
+var matrix = require( 'dstructs-matrix' ),
+	data,
+	mat,
+	out,
+	i;
+
+out = erfc( -1 );
 // returns ~1.8427
 
-erfc( [ -10, -1, 0, 1, 10 ] );
-// returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
-```
-
-When provided an input `array`, the function accepts two `options`:
-
-*  __copy__: `boolean` indicating whether to return a new `array` containing the `erfc` values. Default: `true`.
-*  __accessor__: accessor `function` for accessing numeric values in object `arrays`.
-
-To mutate the input `array` (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
-
-``` javascript
-var arr = [ -10, -1, 0, 1, 10 ];
-
-var vals = erfc( arr, {
-	'copy': false
-});
+out = erfc( [ -10, -1, 0, 1, 10 ] );
 // returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
 
-console.log( arr === vals );
-// returns true
+data = [ 0, 1, 2 ];
+out = erf( data );
+// returns [ 1, ~0.1573, ~0.0047 ]
+
+data = new Int8Array( data );
+out = erf( data );
+// returns Float64Array( [ 1, ~0.1573, ~0.0047 ] )
+
+data = new Float64Array( 6 );
+for ( i = 0; i < 6; i++ ) {
+	data[ i ] = i / 2;
+}
+mat = matrix( data, [3,2], 'float64' );
+/*
+	[  0  0.5
+	   1  1.5
+	   2  2.5 ]
+*/
+
+out = erf( mat );
+/*
+	[  1    ~0.48
+	  ~0.16 ~0.03
+	  ~0    ~0 ]
+*/
 ```
+
+
+The function accepts the following `options`:
+
+* 	__accessor__: accessor `function` for accessing `array` values.
+* 	__dtype__: output [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) or [`matrix`](https://github.com/dstructs/matrix) data type. Default: `float64`.
+*	__copy__: `boolean` indicating if the `function` should return a new data structure. Default: `true`.
+*	__path__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path.
+*	__sep__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `'.'`.
+
+For object `arrays`, provide an accessor `function` for accessing `array` values.
 
 For object `arrays`, provide an accessor `function` for accessing `array` values.
 
@@ -89,20 +116,159 @@ var vals = erfc( data, {
 
 __Note__: the function returns an `array` with a length equal to the original input `array`.
 
+To [deepset](https://github.com/kgryte/utils-deep-set) an object `array`, provide a key path and, optionally, a key path separator.
 
+``` javascript
+var data = [
+	{'x':[0,-10]},
+	{'x':[1,-1]},
+	{'x':[2,0]},
+	{'x':[3,1]},
+	{'x':[4,10]}
+];
+
+var out = erfc( data, 'x|1', '|' );
+/*
+	[
+		{'x':[0,2]},
+		{'x':[1,1.8427]},
+		{'x':[2,1]},
+		{'x':[3,0.1573]},
+		{'x':[4,2.0885e-45]}
+	]
+*/
+
+var bool = ( data === out );
+// returns true
+```
+
+By default, when provided a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) or [`matrix`](https://github.com/dstructs/matrix), the output data structure is `float64` in order to preserve precision. To specify a different data type, set the `dtype` option (see [`matrix`](https://github.com/dstructs/matrix) for a list of acceptable data types).
+
+``` javascript
+var data, out;
+
+data = new Int8Array( [0, 1, 2] );
+
+out = erf( data, {
+	'dtype': 'int32'
+});
+// returns Int32Array( [1,0,0] )
+
+// Works for plain arrays, as well...
+out = erf( [0, 1, 2], {
+	'dtype': 'uint8'
+});
+// returns Uint8Array( [1,0,0] )
+```
+
+By default, the function returns a new data structure. To mutate the input data structure (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
+
+``` javascript
+var data,
+	bool,
+	mat,
+	out,
+	i;
+
+var data = [ -10, -1, 0, 1, 10 ];
+
+var out = erfc( data, {
+	'copy': false
+});
+// returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
+
+bool = (arr === vals );
+// returns true
+
+data = new Float64Array( 6 );
+for ( i = 0; i < 6; i++ ) {
+	data[ i ] = i / 2;
+}
+mat = matrix( data, [3,2], 'float64' );
+/*
+	[  0  0.5
+	   1  1.5
+	   2  2.5 ]
+*/
+
+out = erfc( mat, {
+	'copy': false
+});
+/*
+	[  1    ~0.48
+	  ~0.16 ~0.03
+	  ~0    ~0 ]
+*/
+
+bool = ( mat === out );
+// returns true
+```
 
 ## Examples
 
 ``` javascript
-var erfc = require( 'compute-erfc' );
+var matrix = require( 'dstructs-matrix' ),
+	erf = require( 'compute-erf' );
 
-var data = new Array( 100 );
-for ( var i = 0; i < data.length; i++ ) {
+var data,
+	mat,
+	out,
+	tmp,
+	i;
+
+// Plain arrays...
+data = new Array( 10 );
+for ( i = 0; i < data.length; i++ ) {
 	data[ i ] = Math.random()*20 - 10;
 }
+out = erf( data );
 
-console.log( erfc( data ) );
-// returns [...]
+// Object arrays (accessors)...
+function getValue( d ) {
+	return d.x;
+}
+for ( i = 0; i < data.length; i++ ) {
+	data[ i ] = {
+		'x': data[ i ]
+	};
+}
+out = erf( data, {
+	'accessor': getValue
+});
+
+// Deep set arrays...
+for ( i = 0; i < data.length; i++ ) {
+	data[ i ] = {
+		'x': [ i, data[ i ].x ]
+	};
+}
+out = erf( data, {
+	'path': 'x/1',
+	'sep': '/'
+});
+
+// Typed arrays...
+data = new Int32Array( 10 );
+for ( i = 0; i < data.length; i++ ) {
+	data[ i ] = Math.random() * 100;
+}
+tmp = erf( data );
+out = '';
+for ( i = 0; i < data.length; i++ ) {
+	out += tmp[ i ];
+	if ( i < data.length-1 ) {
+		out += ',';
+	}
+}
+
+// Matrices...
+mat = matrix( data, [5,2], 'int32' );
+out = erf( mat );
+
+// Matrices (custom output data type)...
+out = erf( mat, {
+	'dtype': 'uint8'
+});
 ```
 
 To run the example code from the top-level application directory,
@@ -148,7 +314,7 @@ $ make view-cov
 
 ## Copyright
 
-Copyright &copy; 2014-2015. Athan Reines.
+Copyright &copy; 2014-2015. The [Compute.io](https://github.com/compute-io) Authors.
 
 
 [npm-image]: http://img.shields.io/npm/v/compute-erfc.svg
