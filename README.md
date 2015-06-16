@@ -2,7 +2,22 @@ erfc
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> Complementary error function.
+> Computes the complementary error function.
+
+The [complementary error function](https://en.wikipedia.org/wiki/Error_function) is defined as
+
+<div class="equation" align="center" data-raw-text="
+\operatorname{erfc}(x) = 1-\operatorname{erf}(x) = \frac{2}{\sqrt\pi} \int_x^{\infty} e^{-t^2}\,\mathrm dt" data-equation="eq:complementary_error_function">
+	<img src="" alt="Equation of the complementary error function.">
+	<br>
+</div>
+
+Equivalently, it is calculated by Craig's formula as follows:
+
+<div class="equation" align="center" data-raw-text="\operatorname{erfc}(x) & = \frac{2}{\pi} \int_0^{\frac{\pi}{2}} \exp \left( - \frac{x^2}{\sin^2 \theta} \right) d\theta." data-equation="eq:craigs_formula">
+	<img src="" alt="Craig's formula of the complementary error function.">
+	<br>
+</div>
 
 
 ## Installation
@@ -128,7 +143,7 @@ $ make view-cov
 ---
 ## License
 
-[MIT license](http://opensource.org/licenses/MIT). 
+[MIT license](http://opensource.org/licenses/MIT).
 
 
 ## Copyright
