@@ -147,13 +147,13 @@ var data, out;
 
 data = new Int8Array( [0, 1, 2] );
 
-out = erf( data, {
+out = erfc( data, {
 	'dtype': 'int32'
 });
 // returns Int32Array( [1,0,0] )
 
 // Works for plain arrays, as well...
-out = erf( [0, 1, 2], {
+out = erfc( [0, 1, 2], {
 	'dtype': 'uint8'
 });
 // returns Uint8Array( [1,0,0] )
@@ -206,7 +206,7 @@ bool = ( mat === out );
 
 ``` javascript
 var matrix = require( 'dstructs-matrix' ),
-	erf = require( 'compute-erf' );
+	erfc = require( 'compute-erfc' );
 
 var data,
 	mat,
@@ -219,7 +219,7 @@ data = new Array( 10 );
 for ( i = 0; i < data.length; i++ ) {
 	data[ i ] = Math.random()*20 - 10;
 }
-out = erf( data );
+out = erfc( data );
 
 // Object arrays (accessors)...
 function getValue( d ) {
@@ -230,7 +230,7 @@ for ( i = 0; i < data.length; i++ ) {
 		'x': data[ i ]
 	};
 }
-out = erf( data, {
+out = erfc( data, {
 	'accessor': getValue
 });
 
@@ -240,7 +240,7 @@ for ( i = 0; i < data.length; i++ ) {
 		'x': [ i, data[ i ].x ]
 	};
 }
-out = erf( data, {
+out = erfc( data, {
 	'path': 'x/1',
 	'sep': '/'
 });
@@ -250,7 +250,7 @@ data = new Int32Array( 10 );
 for ( i = 0; i < data.length; i++ ) {
 	data[ i ] = Math.random() * 100;
 }
-tmp = erf( data );
+tmp = erfc( data );
 out = '';
 for ( i = 0; i < data.length; i++ ) {
 	out += tmp[ i ];
@@ -261,10 +261,10 @@ for ( i = 0; i < data.length; i++ ) {
 
 // Matrices...
 mat = matrix( data, [5,2], 'int32' );
-out = erf( mat );
+out = erfc( mat );
 
 // Matrices (custom output data type)...
-out = erf( mat, {
+out = erfc( mat, {
 	'dtype': 'uint8'
 });
 ```
