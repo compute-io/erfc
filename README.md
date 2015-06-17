@@ -93,8 +93,6 @@ The function accepts the following `options`:
 
 For object `arrays`, provide an accessor `function` for accessing `array` values.
 
-For object `arrays`, provide an accessor `function` for accessing `array` values.
-
 ``` javascript
 var data = [
 	['beep', -10],
