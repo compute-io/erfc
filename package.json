@@ -37,7 +37,13 @@
     "complementary",
     "erfc",
     "mathematics",
-    "math"
+    "math",
+    "matrix",
+    "matrices",
+    "array",
+    "arrays",
+    "accessor",
+    "dstructs"
   ],
   "bugs": {
     "url": "https://github.com/compute-io/erfc/issues"

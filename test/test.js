@@ -120,7 +120,8 @@ describe( 'compute-erfc', function tests() {
 		var data, actual, expected, i;
 
 		data = [ -3, -2, -1, 0, 1, 2, 3 ];
-		// Evaluated on Wolfram Alpha
+
+		// Evaluated on Wolfram Alpha:
 		expected = [
 			2,
 			1.9953222,
@@ -135,7 +136,7 @@ describe( 'compute-erfc', function tests() {
 		assert.notEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-4 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-4, i );
 		}
 
 		// Mutate...
@@ -145,7 +146,7 @@ describe( 'compute-erfc', function tests() {
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( data[ i ], expected[ i ], 1e-4 );
+			assert.closeTo( data[ i ], expected[ i ], 1e-4, 'Mutated: ' + i );
 		}
 	});
 
@@ -192,7 +193,9 @@ describe( 'compute-erfc', function tests() {
 		actual = erfc( data, {
 			'dtype': 'int8'
 		});
+
 		assert.notEqual( actual, data );
+		assert.strictEqual( actual.BYTES_PER_ELEMENT, 1 );
 		assert.deepEqual( actual, expected );
 	});
 
@@ -209,7 +212,7 @@ describe( 'compute-erfc', function tests() {
 			[6,3]
 		];
 
-		// Evaluated on Wolfram Alpha
+		// Evaluated on Wolfram Alpha:
 		expected = [
 			2,
 			1.9953222,
@@ -277,9 +280,7 @@ describe( 'compute-erfc', function tests() {
 			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-4 );
 		}
 
-
 		// Specify a path with a custom separator...
-
 		data = [
 			{'x':[0,-3]},
 			{'x':[1,-2]},
@@ -298,7 +299,6 @@ describe( 'compute-erfc', function tests() {
 		for ( i = 0; i < actual.length; i++ ) {
 			assert.closeTo( actual[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-4 );
 		}
-
 	});
 
 	it( 'should evaluate the complementary error function element-wise when provided a matrix', function test() {

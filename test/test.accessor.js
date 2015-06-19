@@ -40,7 +40,7 @@ describe( 'accessor erfc', function tests() {
 
 		actual = erfc( actual, data, getValue );
 
-		// Evaluated on Wolfram Alpha
+		// Evaluated on Wolfram Alpha:
 		expected = [
 			2,
 			1.9953222,

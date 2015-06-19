@@ -38,7 +38,8 @@ describe( 'deepset erfc', function tests() {
 		];
 
 		data = erfc( data, 'x' );
-		// evaluated on Wolfram Alpha
+
+		// Evaluated on Wolfram Alpha:
 		expected = [
 			{'x':2},
 			{'x':1.9953222},
@@ -50,7 +51,7 @@ describe( 'deepset erfc', function tests() {
 		];
 
 		for ( i = 0; i < data.length; i++ ) {
-			assert.closeTo( data[ i ].x, expected[ i ].x, 1e-4 );
+			assert.closeTo( data[ i ].x, expected[ i ].x, 1e-4, i );
 		}
 
 		// Custom separator...
@@ -76,9 +77,8 @@ describe( 'deepset erfc', function tests() {
 		];
 
 		for ( i = 0; i < data.length; i++ ) {
-			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-4, 'custom separator' );
+			assert.closeTo( data[ i ].x[ 1 ], expected[ i ].x[ 1 ], 1e-4, 'Custom: ' + i );
 		}
-
 	});
 
 	it( 'should return null if provided an empty array', function test() {

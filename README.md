@@ -7,14 +7,14 @@ erfc
 The [complementary error function](https://en.wikipedia.org/wiki/Error_function) is defined as
 
 <div class="equation" align="center" data-raw-text="
-\operatorname{erfc}(x) = 1-\operatorname{erf}(x) = \frac{2}{\sqrt\pi} \int_x^{\infty} e^{-t^2}\,\mathrm dt" data-equation="eq:complementary_error_function">
+\operatorname{erfc}(x) = 1 - \operatorname{erf}(x) = \frac{2}{\sqrt\pi} \int_x^{\infty} e^{-t^2}\,\mathrm dt" data-equation="eq:complementary_error_function">
 	<img src="https://cdn.rawgit.com/compute-io/erfc/6ac020746a3ab1978a868f0fe48c91df9ec45b9b/docs/img/eqn.svg" alt="Equation of the complementary error function.">
 	<br>
 </div>
 
-Equivalently, it is calculated by Craig's formula as follows:
+Equivalently, [complementary error function](https://en.wikipedia.org/wiki/Error_function) can be expressed using Craig's formula:
 
-<div class="equation" align="center" data-raw-text="\operatorname{erfc}(x) & = \frac{2}{\pi} \int_0^{\frac{\pi}{2}} \exp \left( - \frac{x^2}{\sin^2 \theta} \right) d\theta." data-equation="eq:craigs_formula">
+<div class="equation" align="center" data-raw-text="\operatorname{erfc}(x) &amp; = \frac{2}{\pi} \int_0^{\frac{\pi}{2}} \exp \left( - \frac{x^2}{\sin^2 \theta} \right) d\theta." data-equation="eq:craigs_formula">
 	<img src="https://cdn.rawgit.com/compute-io/erfc/6ac020746a3ab1978a868f0fe48c91df9ec45b9b/docs/img/eqn2.svg" alt="Craig's formula of the complementary error function.">
 	<br>
 </div>
@@ -37,9 +37,7 @@ var erfc = require( 'compute-erfc' );
 
 #### erfc( x[, options] )
 
-Evaluates the [complementary error function](http://en.wikipedia.org/wiki/Error_function). `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix).
-
-Values may include `NaN`, `+infinity`, and `-infinity`. For an input `array` and `matrix`, the `erfc` function is evaluated for each value.
+Evaluates the [complementary error function](http://en.wikipedia.org/wiki/Error_function). `x` may be either a [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), an [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays), or a [`matrix`](https://github.com/dstructs/matrix). Values may include `NaN`, `+infinity`, and `-infinity`.
 
 
 ``` javascript
@@ -56,11 +54,11 @@ out = erfc( [ -10, -1, 0, 1, 10 ] );
 // returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
 
 data = [ 0, 1, 2 ];
-out = erf( data );
+out = erfc( data );
 // returns [ 1, ~0.1573, ~0.0047 ]
 
 data = new Int8Array( data );
-out = erf( data );
+out = erfc( data );
 // returns Float64Array( [ 1, ~0.1573, ~0.0047 ] )
 
 data = new Float64Array( 6 );
@@ -74,11 +72,11 @@ mat = matrix( data, [3,2], 'float64' );
 	   2  2.5 ]
 */
 
-out = erf( mat );
+out = erfc( mat );
 /*
 	[  1    ~0.48
 	  ~0.16 ~0.03
-	  ~0    ~0 ]
+	  ~0    ~0    ]
 */
 ```
 
@@ -91,7 +89,7 @@ The function accepts the following `options`:
 *	__path__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path.
 *	__sep__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `'.'`.
 
-For object `arrays`, provide an accessor `function` for accessing `array` values.
+For non-numeric `arrays`, provide an accessor `function` for accessing `array` values.
 
 ``` javascript
 var data = [
@@ -106,13 +104,11 @@ function getValue( d, i ) {
 	return d[ 1 ];
 }
 
-var vals = erfc( data, {
+var out = erfc( data, {
 	'accessor': getValue
 });
 // returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
 ```
-
-__Note__: the function returns an `array` with a length equal to the original input `array`.
 
 To [deepset](https://github.com/kgryte/utils-deep-set) an object `array`, provide a key path and, optionally, a key path separator.
 
@@ -175,7 +171,7 @@ var out = erfc( data, {
 });
 // returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
 
-bool = (arr === vals );
+bool = (arr === out );
 // returns true
 
 data = new Float64Array( 6 );
@@ -195,12 +191,13 @@ out = erfc( mat, {
 /*
 	[  1    ~0.48
 	  ~0.16 ~0.03
-	  ~0    ~0 ]
+	  ~0    ~0    ]
 */
 
 bool = ( mat === out );
 // returns true
 ```
+
 
 ## Examples
 

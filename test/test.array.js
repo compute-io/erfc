@@ -74,7 +74,7 @@ describe( 'array erfc', function tests() {
 		];
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-4 );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-4, i );
 		}
 
 		// Typed arrays...
@@ -85,7 +85,7 @@ describe( 'array erfc', function tests() {
 		expected = new Float64Array( expected );
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-4, 'typed arrays' );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-4, i );
 		}
 
 	});
