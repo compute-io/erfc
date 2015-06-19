@@ -171,7 +171,7 @@ var out = erfc( data, {
 });
 // returns [ 2, 1.8427, 1, 0.1573, 2.0885e-45 ]
 
-bool = (arr === out );
+bool = ( data === out );
 // returns true
 
 data = new Float64Array( 6 );
