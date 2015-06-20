@@ -36,7 +36,7 @@ describe( 'compute-erfc', function tests() {
 			true,
 			undefined,
 			null,
-			NaN,
+			// NaN, // accepted
 			function(){},
 			{}
 		];
@@ -349,10 +349,10 @@ describe( 'compute-erfc', function tests() {
 		assert.deepEqual( out.data, d2 );
 	});
 
-	it( 'should return `null` if provided an empty data structure', function test() {
-		assert.isNull( erfc( [] ) );
-		assert.isNull( erfc( matrix( [0,0] ) ) );
-		assert.isNull( erfc( new Int8Array() ) );
+	it( 'should return an empty data structure if provided an empty data structure', function test() {
+		assert.deepEqual( erfc( [] ), [] );
+		assert.deepEqual( erfc( matrix( [0,0] ) ).data, new Float64Array() );
+		assert.deepEqual( erfc( new Int8Array() ), new Float64Array() );
 	});
 
 });

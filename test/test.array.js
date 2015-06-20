@@ -87,12 +87,11 @@ describe( 'array erfc', function tests() {
 		for ( i = 0; i < actual.length; i++ ) {
 			assert.closeTo( actual[ i ], expected[ i ], 1e-4, i );
 		}
-
 	});
 
-	it( 'should return null if provided an empty array', function test() {
-		assert.isNull( erfc( [], [] ) );
-		assert.isNull( erfc( new Int8Array(), new Int8Array() ) );
+	it( 'should return an empty array if provided an empty array', function test() {
+		assert.deepEqual( erfc( [], [] ), [] );
+		assert.deepEqual( erfc( new Int8Array(), new Int8Array() ), new Int8Array() );
 	});
 
 });

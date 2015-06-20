@@ -113,8 +113,8 @@ describe( 'accessor erfc', function tests() {
 		}
 	});
 
-	it( 'should return null if provided an empty array', function test() {
-		assert.isNull( erfc( [], [], getValue ) );
+	it( 'should return an empty array if provided an empty array', function test() {
+		assert.deepEqual( erfc( [], [], getValue ), [] );
 		function getValue( d ) {
 			return d.x;
 		}

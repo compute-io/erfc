@@ -81,9 +81,9 @@ describe( 'deepset erfc', function tests() {
 		}
 	});
 
-	it( 'should return null if provided an empty array', function test() {
-		assert.isNull( erfc( [], 'x' ) );
-		assert.isNull( erfc( [], 'x', '/' ) );
+	it( 'should return an empty array if provided an empty array', function test() {
+		assert.deepEqual( erfc( [], 'x' ), [] );
+		assert.deepEqual( erfc( [], 'x', '/' ), [] );
 	});
 
 });
