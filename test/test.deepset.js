@@ -86,4 +86,25 @@ describe( 'deepset erfc', function tests() {
 		assert.deepEqual( erfc( [], 'x', '/' ), [] );
 	});
 
+	it( 'should handle non-numeric values by setting the element to NaN', function test() {
+		var data, actual, expected;
+
+		data = [
+			{'x':true},
+			{'x':null},
+			{'x':[]},
+			{'x':{}}
+		];
+		actual = erfc( data, 'x' );
+
+		expected = [
+			{'x':NaN},
+			{'x':NaN},
+			{'x':NaN},
+			{'x':NaN}
+		];
+
+		assert.deepEqual( data, expected );
+	});
+
 });

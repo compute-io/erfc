@@ -94,4 +94,16 @@ describe( 'array erfc', function tests() {
 		assert.deepEqual( erfc( new Int8Array(), new Int8Array() ), new Int8Array() );
 	});
 
+	it( 'should handle non-numeric values by setting the element to NaN', function test() {
+		var data, actual, expected;
+
+		data = [ true, null, [], {} ];
+		actual = new Array( data.length );
+		actual = erfc( actual, data );
+
+		expected = [ NaN, NaN, NaN, NaN ];
+
+		assert.deepEqual( actual, expected );
+	});
+
 });

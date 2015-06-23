@@ -9,6 +9,9 @@ var // Expectation library:
 	// Matrix data structure:
 	matrix = require( 'dstructs-matrix' ),
 
+	// Validate if a value is NaN:
+	isnan = require( 'validate.io-nan' ),
+
 	// Module to be tested:
 	erfc = require( './../lib' ),
 
@@ -28,27 +31,6 @@ describe( 'compute-erfc', function tests() {
 
 	it( 'should export a function', function test() {
 		expect( erfc ).to.be.a( 'function' );
-	});
-
-	it( 'should throw an error if the first argument is neither a number or array-like or matrix-like', function test() {
-		var values = [
-			// '5', // valid as is array-like (length)
-			true,
-			undefined,
-			null,
-			// NaN, // accepted
-			function(){},
-			{}
-		];
-
-		for ( var i = 0; i < values.length; i++ ) {
-			expect( badValue( values[i] ) ).to.throw( TypeError );
-		}
-		function badValue( value ) {
-			return function() {
-				erfc( value );
-			};
-		}
 	});
 
 	it( 'should throw an error if provided an invalid option', function test() {
@@ -108,6 +90,22 @@ describe( 'compute-erfc', function tests() {
 					'dtype': value
 				});
 			};
+		}
+	});
+
+	it( 'should return NaN if the first argument is neither a number, array-like, or matrix-like', function test() {
+		var values = [
+			// '5', // valid as is array-like (length)
+			true,
+			undefined,
+			null,
+			// NaN, // allowed
+			function(){},
+			{}
+		];
+
+		for ( var i = 0; i < values.length; i++ ) {
+			assert.isTrue( isnan( erfc( values[ i ] ) ) );
 		}
 	});
 

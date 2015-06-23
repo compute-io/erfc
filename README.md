@@ -199,6 +199,63 @@ bool = ( mat === out );
 ```
 
 
+## Notes
+
+*	If an element is __not__ a numeric value, the evaluated [complementary error function](http://en.wikipedia.org/wiki/Error_function) is `NaN`.
+
+	``` javascript
+	var data, out;
+
+	out = erfc( null );
+	// returns NaN
+
+	out = erfc( true );
+	// returns NaN
+
+	out = erfc( {'a':'b'} );
+	// returns NaN
+
+	out = erfc( [ true, null, [] ] );
+	// returns [ NaN, NaN, NaN ]
+
+	function getValue( d, i ) {
+		return d.x;
+	}
+	data = [
+		{'x':true},
+		{'x':[]},
+		{'x':{}},
+		{'x':null}
+	];
+
+	out = erfc( data, {
+		'accessor': getValue
+	});
+	// returns [ NaN, NaN, NaN, NaN ]
+
+	out = erfc( data, {
+		'path': 'x'
+	});
+	/*
+		[
+			{'x':NaN},
+			{'x':NaN},
+			{'x':NaN,
+			{'x':NaN}
+		]
+	*/
+	```
+
+*	Be careful when providing a data structure which contains non-numeric elements and specifying an `integer` output data type, as `NaN` values are cast to `0`.
+
+	``` javascript
+	var out = erfc( [ true, null, [] ], {
+		'dtype': 'int8'
+	});
+	// returns Int8Array( [0,0,0] );
+	```
+
+
 ## Examples
 
 ``` javascript
