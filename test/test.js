@@ -75,6 +75,24 @@ describe( 'compute-erfc', function tests() {
 		}
 	});
 
+	it( 'should throw an error if provided a typed-array and an unrecognized/unsupported data type option', function test() {
+		var values = [
+			'beep',
+			'boop'
+		];
+
+		for ( var i = 0; i < values.length; i++ ) {
+			expect( badValue( values[i] ) ).to.throw( Error );
+		}
+		function badValue( value ) {
+			return function() {
+				erfc( new Int8Array([1,2,3]), {
+					'dtype': value
+				});
+			};
+		}
+	});
+
 	it( 'should throw an error if provided a matrix and an unrecognized/unsupported data type option', function test() {
 		var values = [
 			'beep',
@@ -112,6 +130,8 @@ describe( 'compute-erfc', function tests() {
 	it( 'should compute the error function when provided a number', function test() {
 		assert.strictEqual( erfc( 0 ), 1 );
 		assert.closeTo( erfc( 0.5 ), 0.479500, 1e-4 );
+
+		assert.isTrue( isnan( erfc( NaN ) ) );
 	});
 
 	it( 'should evaluate the complementary error function when provided a plain array', function test() {
