@@ -24,7 +24,7 @@ describe( 'deepset erfc', function tests() {
 		expect( erfc ).to.be.a( 'function' );
 	});
 
-	it( 'should compute the error function and deep set', function test() {
+	it( 'should compute the complementary error function and deep set', function test() {
 		var data, expected, i;
 
 		data = [

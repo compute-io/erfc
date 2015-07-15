@@ -117,7 +117,7 @@ describe( 'compute-erfc', function tests() {
 			true,
 			undefined,
 			null,
-			// NaN, // allowed
+			NaN,
 			function(){},
 			{}
 		];
@@ -127,7 +127,7 @@ describe( 'compute-erfc', function tests() {
 		}
 	});
 
-	it( 'should compute the error function when provided a number', function test() {
+	it( 'should compute the complementary error function when provided a number', function test() {
 		assert.strictEqual( erfc( 0 ), 1 );
 		assert.closeTo( erfc( 0.5 ), 0.479500, 1e-4 );
 

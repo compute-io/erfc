@@ -2,7 +2,7 @@ erfc
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> Computes the complementary error function.
+> Computes the [complementary error function](https://en.wikipedia.org/wiki/Error_function).
 
 The [complementary error function](https://en.wikipedia.org/wiki/Error_function) is defined as
 

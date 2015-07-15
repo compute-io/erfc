@@ -55,7 +55,7 @@ describe( 'matrix erfc', function tests() {
 		}
 	});
 
-	it( 'should evaluate the error function for each matrix element', function test() {
+	it( 'should evaluate the complementary error function for each matrix element', function test() {
 		var actual;
 
 		actual = matrix( [5,5], 'float64' );
