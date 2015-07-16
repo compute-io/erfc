@@ -24,7 +24,7 @@ describe( 'number erfc', function tests() {
 		expect( erfc ).to.be.a( 'function' );
 	});
 
-	it( 'should evaluate the error function', function test() {
+	it( 'should evaluate the complementary error function', function test() {
 		assert.closeTo( erfc( 9 ), 0, 1e-4 );
 		assert.closeTo( erfc( 900 ), 0, 1e-4 );
 		assert.closeTo( erfc( 1 ), 0.157299, 1e-4 );

@@ -7,7 +7,7 @@ var // Expectation library:
 	chai = require( 'chai' ),
 
 	// Module to be tested:
-	erfc = require( './../lib/array.js' );
+	erfc = require( './../lib/typedarray.js' );
 
 
 // VARIABLES //
@@ -18,7 +18,7 @@ var expect = chai.expect,
 
 // TESTS //
 
-describe( 'array erfc', function tests() {
+describe( 'typed-array erfc', function tests() {
 
 	it( 'should export a function', function test() {
 		expect( erfc ).to.be.a( 'function' );
@@ -27,7 +27,7 @@ describe( 'array erfc', function tests() {
 	it( 'should evaluate the complementary error function', function test() {
 		var data, actual, expected, i;
 
-		data = [
+		data = new Float64Array([
 			1e-306,
 			-1e-306,
 			1e-299,
@@ -46,13 +46,13 @@ describe( 'array erfc', function tests() {
 			-3,
 			100,
 			-100
-		];
-		actual = new Array( data.length );
+		]);
+		actual = new Float64Array( data.length );
 
 		actual = erfc( actual, data );
 
 		// Evaluated on Wolfram Alpha:
-		expected = [
+		expected = new Float64Array([
 			1.00000000,
 			1.00000000,
 			1.00000000,
@@ -71,27 +71,15 @@ describe( 'array erfc', function tests() {
 			1.99997791,
 			0.00000000,
 			2.00000000
-		];
+		]);
 
 		for ( i = 0; i < actual.length; i++ ) {
-			assert.closeTo( actual[ i ], expected[ i ], 1e-4, i );
+			assert.closeTo( actual[ i ], expected[ i ], 1e-4 );
 		}
 	});
 
 	it( 'should return an empty array if provided an empty array', function test() {
-		assert.deepEqual( erfc( [], [] ), [] );
-	});
-
-	it( 'should handle non-numeric values by setting the element to NaN', function test() {
-		var data, actual, expected;
-
-		data = [ true, null, [], {} ];
-		actual = new Array( data.length );
-		actual = erfc( actual, data );
-
-		expected = [ NaN, NaN, NaN, NaN ];
-
-		assert.deepEqual( actual, expected );
+		assert.deepEqual( erfc( new Int8Array(), new Int8Array() ), new Int8Array() );
 	});
 
 });

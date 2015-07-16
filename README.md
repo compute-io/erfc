@@ -2,7 +2,7 @@ erfc
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> Computes the complementary error function.
+> Computes the [complementary error function](https://en.wikipedia.org/wiki/Error_function).
 
 The [complementary error function](https://en.wikipedia.org/wiki/Error_function) is defined as
 
@@ -67,9 +67,9 @@ for ( i = 0; i < 6; i++ ) {
 }
 mat = matrix( data, [3,2], 'float64' );
 /*
-	[  0  0.5
-	   1  1.5
-	   2  2.5 ]
+	[ 0  0.5
+	  1  1.5
+	  2  2.5 ]
 */
 
 out = erfc( mat );
@@ -199,6 +199,63 @@ bool = ( mat === out );
 ```
 
 
+## Notes
+
+*	If an element is __not__ a numeric value, the evaluated [complementary error function](http://en.wikipedia.org/wiki/Error_function) is `NaN`.
+
+	``` javascript
+	var data, out;
+
+	out = erfc( null );
+	// returns NaN
+
+	out = erfc( true );
+	// returns NaN
+
+	out = erfc( {'a':'b'} );
+	// returns NaN
+
+	out = erfc( [ true, null, [] ] );
+	// returns [ NaN, NaN, NaN ]
+
+	function getValue( d, i ) {
+		return d.x;
+	}
+	data = [
+		{'x':true},
+		{'x':[]},
+		{'x':{}},
+		{'x':null}
+	];
+
+	out = erfc( data, {
+		'accessor': getValue
+	});
+	// returns [ NaN, NaN, NaN, NaN ]
+
+	out = erfc( data, {
+		'path': 'x'
+	});
+	/*
+		[
+			{'x':NaN},
+			{'x':NaN},
+			{'x':NaN,
+			{'x':NaN}
+		]
+	*/
+	```
+
+*	Be careful when providing a data structure which contains non-numeric elements and specifying an `integer` output data type, as `NaN` values are cast to `0`.
+
+	``` javascript
+	var out = erfc( [ true, null, [] ], {
+		'dtype': 'int8'
+	});
+	// returns Int8Array( [0,0,0] );
+	```
+
+
 ## Examples
 
 ``` javascript
@@ -245,7 +302,7 @@ out = erfc( data, {
 // Typed arrays...
 data = new Int32Array( 10 );
 for ( i = 0; i < data.length; i++ ) {
-	data[ i ] = Math.random() * 100;
+	data[ i ] = Math.random()*20 - 10;
 }
 tmp = erfc( data );
 out = '';

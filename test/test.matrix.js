@@ -12,7 +12,7 @@ var // Expectation library:
 	// Module to be tested:
 	erfc = require( './../lib/matrix.js' ),
 
-	// Error function:
+	// Complementary error function:
 	ERFC = require( './../lib/number.js' );
 
 
@@ -55,7 +55,7 @@ describe( 'matrix erfc', function tests() {
 		}
 	});
 
-	it( 'should evaluate the error function for each matrix element', function test() {
+	it( 'should evaluate the complementary error function for each matrix element', function test() {
 		var actual;
 
 		actual = matrix( [5,5], 'float64' );
@@ -64,19 +64,20 @@ describe( 'matrix erfc', function tests() {
 		assert.deepEqual( actual.data, out.data );
 	});
 
-	it( 'should return null if provided an empty matrix', function test() {
-		var out, mat;
+	it( 'should return an empty matrix if provided an empty matrix', function test() {
+		var out, mat, expected;
 
 		out = matrix( [0,0] );
+		expected = matrix( [0,0] ).data;
 
 		mat = matrix( [0,10] );
-		assert.isNull( erfc( out, mat ) );
+		assert.deepEqual( erfc( out, mat ).data, expected );
 
 		mat = matrix( [10,0] );
-		assert.isNull( erfc( out, mat ) );
+		assert.deepEqual( erfc( out, mat ).data, expected );
 
 		mat = matrix( [0,0] );
-		assert.isNull( erfc( out, mat ) );
+		assert.deepEqual( erfc( out, mat ).data, expected );
 	});
 
 });

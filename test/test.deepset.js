@@ -24,7 +24,7 @@ describe( 'deepset erfc', function tests() {
 		expect( erfc ).to.be.a( 'function' );
 	});
 
-	it( 'should compute the error function and deep set', function test() {
+	it( 'should compute the complementary error function and deep set', function test() {
 		var data, expected, i;
 
 		data = [
@@ -81,9 +81,30 @@ describe( 'deepset erfc', function tests() {
 		}
 	});
 
-	it( 'should return null if provided an empty array', function test() {
-		assert.isNull( erfc( [], 'x' ) );
-		assert.isNull( erfc( [], 'x', '/' ) );
+	it( 'should return an empty array if provided an empty array', function test() {
+		assert.deepEqual( erfc( [], 'x' ), [] );
+		assert.deepEqual( erfc( [], 'x', '/' ), [] );
+	});
+
+	it( 'should handle non-numeric values by setting the element to NaN', function test() {
+		var data, actual, expected;
+
+		data = [
+			{'x':true},
+			{'x':null},
+			{'x':[]},
+			{'x':{}}
+		];
+		actual = erfc( data, 'x' );
+
+		expected = [
+			{'x':NaN},
+			{'x':NaN},
+			{'x':NaN},
+			{'x':NaN}
+		];
+
+		assert.deepEqual( data, expected );
 	});
 
 });

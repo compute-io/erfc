@@ -113,8 +113,29 @@ describe( 'accessor erfc', function tests() {
 		}
 	});
 
-	it( 'should return null if provided an empty array', function test() {
-		assert.isNull( erfc( [], [], getValue ) );
+	it( 'should return an empty array if provided an empty array', function test() {
+		assert.deepEqual( erfc( [], [], getValue ), [] );
+		function getValue( d ) {
+			return d.x;
+		}
+	});
+
+	it( 'should handle non-numeric values by setting the element to NaN', function test() {
+		var data, actual, expected;
+
+		data = [
+			{'x':true},
+			{'x':null},
+			{'x':[]},
+			{'x':{}}
+		];
+		actual = new Array( data.length );
+		actual = erfc( actual, data, getValue );
+
+		expected = [ NaN, NaN, NaN, NaN ];
+
+		assert.deepEqual( actual, expected );
+
 		function getValue( d ) {
 			return d.x;
 		}
