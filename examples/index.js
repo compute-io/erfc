@@ -55,7 +55,7 @@ console.log( '\n' );
 // Typed arrays...
 data = new Int32Array( 10 );
 for ( i = 0; i < data.length; i++ ) {
-	data[ i ] = Math.random() * 100;
+	data[ i ] = Math.random()*20 - 10;
 }
 tmp = erfc( data );
 out = '';

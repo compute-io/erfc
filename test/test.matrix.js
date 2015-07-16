@@ -12,7 +12,7 @@ var // Expectation library:
 	// Module to be tested:
 	erfc = require( './../lib/matrix.js' ),
 
-	// Error function:
+	// Complementary error function:
 	ERFC = require( './../lib/number.js' );
 
 
